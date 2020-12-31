@@ -1,0 +1,90 @@
+﻿{% extends "layout.html" %}
+
+{% set active_page = "Risk Score" %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/vendors/font-awesome/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+
+	{% if targeting|length > 0 and "name" in targeting[0] and "country" in targeting[0] and "vertical" in targeting[0] %}
+		{% if register %}
+			{% set flag_margin = 5 %}
+		{% else %}
+			{% set flag_margin = 4 %}
+		{% endif %}
+	{% elif register %}
+		{% set flag_margin = 4 %}
+	{% else %}
+		{% set flag_margin = 1 %}
+	{% endif %}
+
+    <div class="content-wrapper">
+        <div class="dashboard-header d-flex flex-column grid-margin">
+            <div class="d-flex align-items-center justify-content-between flex-wrap border-bottom pb-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <i id="geoipFlag" class="mb-{{ flag_margin }} flag-icon flag-icon-{{ geo.countryCode.lower() }}"></i>
+	                <div>
+		                <a href="{{ query }}" style="color: #a7a7ba">
+			                <h5 class="mb-1 ml-2 font-weight-bold" id="lookupText">{{ query|truncate(85, true, ' ...') }}</h5>
+		                </a>
+		                {% if register %}
+			                <p class="text-muted my-0 tx-11" style="margin-left: -1.2rem;">Registered: {{ register }}</p>
+		                {% endif %}
+	                    {% if targeting|length > 0 %}
+		                    <div style="margin-left: -1.2rem;" class="d-flex align-items-center">
+	                            <i class="mt-1 fa fa-exclamation-circle icon-sm text-danger"></i>
+	                            <p class="mb-0 ml-2 pt-1 text-danger">
+		                            Targetting {{ targeting[0]["name"] }} - {{ targeting[0]["country"][0]|upper }} {{ targeting[0]["vertical"][0] }}</p>
+	                        </div>
+	                    {% endif %}
+	                </div>
+                </div>
+
+	            <div id="riskScoreGage" style="width: 20%"></div>
+            </div>
+
+            <div class="d-md-flex align-items-center justify-content-between flex-wrap">
+                <div class="d-flex mt-3 mt-lg-0">
+                    <div class="d-none d-md-flex">
+
+                        {% for h in heuristic %}
+
+                        <div class="d-flex align-items-center mr-3" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ h.description }}">
+                            <i class="fa fa-exclamation-triangle icon-sm text-warning"></i>
+                            <p class="mb-0 ml-2 pt-1 cursor-pointer">{{ h.title }}</p>
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/vendors/justgage/raphael-2.1.4.min.js"></script>
+    <script src="/static/vendors/justgage/justgage.js"></script>
+
+    <script>
+        var riskScore = new JustGage({
+            id: "riskScoreGage",
+            value: {{ risk_score }},
+            valueFontColor: "white",
+            min: 0,
+            max: 100,
+            title: "Risk Score",
+            label: "",
+            levelColorsGradient: false
+        });
+    </script>
+
+	 <script src="/static/js/tooltips.js"></script>
+
+{% endblock %}

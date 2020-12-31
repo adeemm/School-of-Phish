@@ -1,0 +1,115 @@
+﻿{% set navigation_bar = [
+    ('./risk', 'mdi-security', 'Risk Score'),
+    ('./blacklists', 'mdi-playlist-remove', 'Blacklists'),
+    ('./info', 'mdi-clipboard-text-outline', 'Domain Information'),
+] -%}
+
+{% set webpage_submenu = [
+    ('./webpage', 'Page Information'),
+	('./preview', 'Preview'),
+	('./timeline', 'Event Timeline')
+] -%}
+
+{% set active_page = active_page -%}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>School of Phish</title>
+    <link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/static/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block css %}{% endblock %}
+    <link rel="shortcut icon" href="/static/images/favicon.png" />
+</head>
+
+<body>
+	<div class="loading" id="loading" style="display:none;">loading</div>
+
+    <div class="container-scroller">
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center">
+                <a class="navbar-brand brand-logo" href="/">School of Phish</a>
+                <a class="navbar-brand brand-logo-mini" href="/">CSOC</a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="search">
+                                    <i class="mdi mdi-magnify" id="searchButton" onclick="validateSearch()"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="lookup" placeholder="Go phishing..." aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid page-body-wrapper">
+
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+
+                    {% for href, icon, name in navigation_bar %}
+	                    <li class="nav-item {% if name == active_page %} active {% endif %}">
+	                        <a class="nav-link" href="{{ href }}">
+	                            <i class="mdi {{ icon }} menu-icon"></i>
+	                            <span class="menu-title">{{ name }}</span>
+	                        </a>
+	                    </li>
+                    {% endfor %}
+
+
+                    {% if active_page in webpage_submenu|map(attribute=1) %}
+	                    {% set expand_submenu = True -%}
+                    {% endif %}
+
+                    <li class="nav-item {% if expand_submenu %} active {% endif %}">
+	                    <a class="nav-link" data-toggle="collapse" href="#page-info"
+	                       aria-expanded="{{ expand_submenu|lower }}"
+	                       aria-controls="page-info">
+		                    <i class="mdi mdi-television-guide menu-icon"></i>
+		                    <span class="menu-title">Page Information</span>
+		                    <i class="menu-arrow"></i>
+	                    </a>
+                        <div class="collapse {% if expand_submenu %} show {% endif %}" id="page-info">
+                            <ul class="nav flex-column sub-menu">
+	                            {% for href, name in webpage_submenu %}
+									<li class="nav-item">
+			                            <a class="nav-link {% if name == active_page %} active {% endif %}" href="{{ href }}">
+				                            {{ name }}
+			                            </a>
+		                            </li>
+	                            {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="main-panel">
+                {% block content %}{% endblock %}
+
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Created by Adeem Mawani</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Clemson Cybersecurity Operations Center</span>
+                    </div>
+                </footer>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/vendors/js/vendor.bundle.base.js"></script>
+    {% block js %}{% endblock %}
+    <script type="text/javascript" src="/static/js/validation.js"></script>
+</body>
+</html>

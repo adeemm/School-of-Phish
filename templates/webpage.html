@@ -1,0 +1,145 @@
+﻿{% extends "layout.html" %}
+
+{% set active_page = "Page Information" %}
+
+
+{% block css %}
+
+	<link rel="stylesheet" type="text/css" href="/static/vendors/prism/prism.css" />
+	<link rel="stylesheet" type="text/css" href="/static/vendors/prism/plugins.css" />
+
+{% endblock %}
+
+
+{% block content %}
+
+	<div class="content-wrapper">
+
+		{% if urlscan %}
+
+			<div class="row">
+				<div class="col-md-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-body">
+							<h6 class="card-title">Technologies Used</h6>
+							<p class="mb-2 text-muted">Technology stacks detected during page load</p>
+							<div class="table-responsive">
+								<table class="table card-table-one">
+									<thead>
+										<tr>
+											<th class="px-0">Name</th>
+											<th>Type(s)</th>
+											<th>Confidence Level</th>
+											<th>Detection</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										{% for tech in urlscan["meta"]["processors"]["wappa"]["data"] %}
+											<tr>
+												<td class="px-0">
+													<div class="d-flex">
+														<img class="mr-2" src="/static/vendors/wappa/icons/{{ tech["icon"] }}" alt="{{ tech["icon"] }}" />
+														<strong class="mt-2">{{ tech["app"] }}</strong>
+													</div>
+												</td>
+
+												<td>
+													{% for cat in tech["categories"] %}
+														{{ cat["name"] }} {% if not loop.last %}, {% endif %} &nbsp;
+													{% endfor %}
+												</td>
+
+												<td>{{ tech["confidenceTotal"] }}%</td>
+
+												<td>{{ tech["confidence"][0]["pattern"] }}</td>
+											</tr>
+										{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{% if urlscan["data"]["cookies"]|length > 0 %}
+				{% set has_cookies = True %}
+			{% endif %}
+
+			<div class="row">
+				<div class="col-md-{% if has_cookies %}6{% else %}12{% endif %} grid-margin">
+					<div class="card">
+						<div class="card-body">
+							<h6 class="card-title">Page DOM</h6>
+							<pre data-src="/static/vendors/prism/prism-toolbar.js" style="max-height: 18em;"><code class="language-html match-braces no-brace-hover">{{ urlscan["task"]["dom"] }}</code></pre>
+						</div>
+					</div>
+				</div>
+
+				{% if has_cookies %}
+					<div class="col-md-6 grid-margin">
+						<div class="card">
+							<div class="card-body">
+								<h6 class="card-title">Cookies</h6>
+								<ul class="bullet-line-list pt-2 mb-0">
+									{% for cookie in urlscan["data"]["cookies"] %}
+										<li>
+											<h6><strong>{{ cookie["name"] }}</strong></h6>
+											<p>{{ cookie["value"] }}</p>
+											<br>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+			</div>
+
+		{% else %}
+
+			<center><h1 class="text-danger">Error loading page information</h1></center>
+
+		{% endif %}
+	</div>
+
+{% endblock %}
+
+
+{% block js %}
+
+	<script type="text/javascript" src="/static/vendors/prism/prism.js"></script>
+	<script type="text/javascript" src="/static/vendors/prism/prism-toolbar.js"></script>
+	<script type="text/javascript">
+		Prism.plugins.toolbar.registerButton('select-code', function (env) {
+			var button = document.createElement('button');
+			button.innerHTML = 'Select All';
+			button.addEventListener('click', function () {
+				if (document.body.createTextRange) { // ms
+					var range = document.body.createTextRange();
+					range.moveToElementText(env.element);
+					range.select();
+				}
+				else if (window.getSelection) { // moz, opera, webkit
+					var selection = window.getSelection();
+					var range = document.createRange();
+					range.selectNodeContents(env.element);
+					selection.removeAllRanges();
+					selection.addRange(range);
+				}
+			});
+			return button;
+		});
+
+		Prism.plugins.toolbar.registerButton('beautify', {
+			text: 'Beautify',
+			onClick: function (env) {
+				alert('TODO');
+			}
+		});
+	</script>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:url("../images/underwater.jpg");
+  background-size:cover;
+  background-repeat:no-repeat;
+  color: white;
+}
+
+#tank {
+  width:100%;
+  height:100%;
+}
+
+.school {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.fish {
+  position: absolute;
+}
+
+.fish-form-container {
+  background: none;
+}
+
+.fish-form {
+  background: #1e1e2f;
+}
+
+.fish-margin {
+  margin-right: -25px;
+}

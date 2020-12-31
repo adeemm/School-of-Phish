@@ -1,0 +1,76 @@
+﻿{% extends "layout.html" %}
+
+{% set active_page = "Event Timeline" %}
+
+{% block content %}
+
+	<div class="content-wrapper">
+
+		{% if urlscan and "data" in urlscan %}
+
+			<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Requests During Page Load</h4>
+						<p class="card-description">A timeline of requests that occurred during page load</p>
+						<div class="mt-5">
+							<div class="timeline">
+
+								<div class="timeline-wrapper timeline-wrapper-success">
+									<div class="timeline-badge"></div>
+									<div class="timeline-panel">
+										<div class="timeline-heading">
+											<h6 class="timeline-title">Page Began Loading</h6>
+										</div>
+									</div>
+								</div>
+
+								{% for req in urlscan["data"]["requests"] %}
+									<div class="timeline-wrapper {% if loop.index % 2 == 1 %} timeline-inverted {% endif %} timeline-wrapper-info">
+										<div class="timeline-badge"></div>
+										<div class="timeline-panel">
+											<div class="timeline-heading">
+												<h6 class="timeline-title">Initiator: &nbsp; {{ req["request"]["initiator"]["type"] }} / {{ req["request"]["type"] }}</h6>
+											</div>
+											<div class="timeline-body">
+												<p>
+													{{ req["request"]["request"]["url"] }}
+												</p>
+											</div>
+											<div class="timeline-footer d-flex align-items-center flex-wrap">
+												{% if "failed" in req["response"] %}
+													<span>{{ req["response"]["failed"]["errorText"] }}</span>
+												{% else %}
+													<span>{{ req["request"]["request"]["method"] }} - {{ req["response"]["response"]["status"] }}</span>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+
+								<div class="timeline-wrapper {% if urlscan["data"]["requests"]|length % 2 == 0 %} timeline-inverted {% endif %} timeline-wrapper-danger">
+									<div class="timeline-badge"></div>
+									<div class="timeline-panel">
+										<div class="timeline-heading">
+											<h6 class="timeline-title">Page Stopped Loading</h6>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% else %}
+
+			<center><h1 class="text-danger">Error loading timeline</h1></center>
+
+		{% endif %}
+
+	</div>
+
+{% endblock %}
