@@ -37,7 +37,8 @@ async function validateSearch() {
     var url = lookup.value;
 
     var redirected = await getRedirect(url);
-    redirected = redirected.replace(/['"\n]+/g, '');
+    if (redirected)
+        redirected = redirected.replace(/['"\n]+/g, '');
 
     url = redirected !== "null" ? redirected : url;
 

@@ -20,15 +20,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>School of Phish</title>
     <link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/static/vendors/grafana/grafana.css">
     <link rel="stylesheet" href="/static/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/loading.css">
     {% block css %}{% endblock %}
     <link rel="shortcut icon" href="/static/images/favicon.png" />
 </head>
 
 <body>
-	<div class="loading" id="loading" style="display:none;">loading</div>
+	{% include "loading.html" %}
 
     <div class="container-scroller">
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -99,7 +100,7 @@
 
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Created by Adeem Mawani</span>
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">School of Phish</span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Clemson Cybersecurity Operations Center</span>
                     </div>
                 </footer>
@@ -108,8 +109,9 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="/static/vendors/js/vendor.bundle.base.js"></script>
+    <script type="text/javascript" src="/static/vendors/bundle/bundle.js"></script>
     {% block js %}{% endblock %}
     <script type="text/javascript" src="/static/js/validation.js"></script>
+    <script type="text/javascript" src="/static/js/loading.js"></script>
 </body>
 </html>

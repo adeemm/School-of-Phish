@@ -26,7 +26,7 @@ def virustotal(url):
             if results["status"] == "completed":
                 break
             else:
-                time.sleep(7)
+                time.sleep(10)
 
         return results
 
@@ -46,7 +46,7 @@ def urlscan(url):
 
     try:
         # Search to see if the site has already been scanned
-        search_results = requests.get(search_url + query).json()
+        search_results = requests.get(search_url + query, headers=headers).json()
         if search_results["total"] > 0:
             result_link = search_results["results"][0]["result"]
 
@@ -101,7 +101,7 @@ def iana_whois(query):
 
     # Remove consecutive newlines
     return [x[0] for x in groupby(result)]
-    
+
 
 @cache.memoize()
 def dq_whois(query, cached=True):
@@ -110,7 +110,7 @@ def dq_whois(query, cached=True):
 
     session = requests.Session()
     page = session.get(base_url + query + cache).text
-    
+
     new_url = re.search("\$\.ajax\({\s*url: '(.*)',", page).group(1)
     response = session.get(new_url)
 
@@ -136,7 +136,7 @@ def dig_dns(query, type="A"):
 
     parser = bs4.BeautifulSoup(page.text, "html.parser")
     token = parser.find("input", {"name": "csrfmiddlewaretoken"})['value']
-    
+
     response = session.post(post_url, headers={"Referer": form_url}, data={"csrfmiddlewaretoken": token, "domain": query, "typ": type})
 
     if response.status_code == 200:
@@ -212,12 +212,12 @@ def domain_impersonation(query):
     return scan["verdicts"]["urlscan"]["brands"] if scan else []
 
 
-api_function_mapping = {
-            'virustotal': virustotal,
-            'urlscan': urlscan,
-            'geoip': geoip,
-            'iana-whois': iana_whois,
-            'dq-whois': dq_whois,
-            'rdap': rdap,
-            'redirect': get_redirect_url
-        }
+# api_function_mapping = {
+#             'virustotal': virustotal,
+#             'urlscan': urlscan,
+#             'geoip': geoip,
+#             'iana-whois': iana_whois,
+#             'dq-whois': dq_whois,
+#             'rdap': rdap,
+#             'redirect': get_redirect_url
+#         }

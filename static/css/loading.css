@@ -1,0 +1,316 @@
+/* TODO fix duplicated code blocks? And change body stles to overlay div / maybe animate it in too */
+
+.loading-screen * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.loading-screen-wrapper {
+    padding: 0px;
+    display: block;
+    background: #000 url("../images/underwater-animated.gif") top center no-repeat;
+    background-size: cover;
+    height: 100%;
+    margin: -1.55% 0px 0px;
+    -webkit-animation: fadeInUp 0.5s;
+    -moz-animation: fadeInUp 0.5s;
+    -ms-animation: fadeInUp 0.5s;
+    -o-animation: fadeInUp 0.5s;
+    animation: fadeInUp 0.5s;
+}
+
+.loading-screen {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 100px;
+    display: block;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    line-height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    height: 100%;
+}
+
+.loading-screen .test {
+    -webkit-animation: squiggly-anim 1.64s linear infinite;
+    animation: squiggly-anim 1.64s linear infinite;
+    margin-top: 15%;
+}
+
+.loading-screen .test {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    outline: none;
+    text-align: center;
+    line-height: 1;
+    background: transparent url("../images/water-texture.gif") bottom center no-repeat;
+    background-size: cover;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.loading-screen .small {
+    font-size: 0.5em;
+}
+
+.loading-screen .smaller {
+    font-size: 0.2em;
+    padding: 20px;
+}
+
+.loading-screen .ex-small {
+    font-size: 16px;
+    margin-top: 45px;
+}
+
+.loading-screen p {
+    margin: 0;
+}
+
+@-webkit-keyframes squiggly-anim {
+    0% {
+        -webkit-filter: url("#squiggly-0");
+        filter: url("#squiggly-0");
+    }
+    25% {
+        -webkit-filter: url("#squiggly-1");
+        filter: url("#squiggly-1");
+    }
+    50% {
+        -webkit-filter: url("#squiggly-2");
+        filter: url("#squiggly-2");
+    }
+    75% {
+        -webkit-filter: url("#squiggly-3");
+        filter: url("#squiggly-3");
+    }
+    100% {
+        -webkit-filter: url("#squiggly-4");
+        filter: url("#squiggly-4");
+    }
+}
+
+@keyframes squiggly-anim {
+    0% {
+        -webkit-filter: url("#squiggly-0");
+        filter: url("#squiggly-0");
+    }
+    25% {
+        -webkit-filter: url("#squiggly-1");
+        filter: url("#squiggly-1");
+    }
+    50% {
+        -webkit-filter: url("#squiggly-2");
+        filter: url("#squiggly-2");
+    }
+    75% {
+        -webkit-filter: url("#squiggly-3");
+        filter: url("#squiggly-3");
+    }
+    100% {
+        -webkit-filter: url("#squiggly-4");
+        filter: url("#squiggly-4");
+    }
+}
+
+.loading-screen .bubbles {
+    display: block;
+    position: relative;
+}
+
+.loading-screen .bubbles h1 {
+    position: relative;
+    z-index: 2;
+}
+
+.loading-screen .individual-bubble {
+    position: absolute;
+    border-radius: 100%;
+    bottom: 10px;
+    background: radial-gradient(
+            rgba(162, 250, 245, 0.1),
+            rgba(255, 255, 255, 0.2)
+    );
+    z-index: 1;
+    box-shadow: -1px 0px rgba(255, 255, 255, 0.2),
+    0px -1px rgba(255, 255, 255, 0.1), 1px 0px rgba(3, 205, 190, 0.3),
+    0px 1px rgba(3, 205, 190, 0.3);
+    opacity: 0.4;
+}
+
+.loading-screen * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.loading-screen html {
+    display: block;
+    background: #000 url("../images/underwater-animated.gif") top center no-repeat;
+    background-size: cover;
+}
+
+.loading-screen body {
+    font-family: "Arial Black", sans-serif;
+    font-size: 100px;
+    display: block;
+    position: relative;
+}
+
+.loading-screen svg#fish {
+    top: 20%;
+    opacity: 0.2;
+}
+
+/* Fish Animation */
+.loading-screen svg.fish {
+    overflow: visible;
+    transition: all 800ms easeInBack;
+    transition: rotate 100ms easeOut;
+}
+
+@-webkit-keyframes swim {
+    0% {
+        margin-left: -235px;
+    }
+    90% {
+        margin-left: 100%;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}
+
+@keyframes swim {
+    0% {
+        margin-left: -435px;
+        transform: translateX(-10rem) scale(1.5);
+    }
+    30% {
+        margin-left: 0px;
+        transform: translateX(45rem) scale(0.5);
+    }
+    100% {
+        transform: translateX(110rem) scale(1.5);
+    }
+}
+
+.loading-screen .fish {
+    width: 235px;
+    height: 104px;
+    position: absolute;
+    animation: swim 20s;
+    -webkit-animation: swim 20s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+}
+
+svg #fish1,
+svg #fish2,
+svg #fish3,
+svg #fish4,
+svg #fish5,
+svg #fish6 {
+    fill: #528484;
+
+    -moz-animation: bounce 5s infinite;
+    -webkit-animation: bounce 5s infinite;
+    animation: bounce 5s infinite;
+}
+
+svg #fish2 {
+    animation-delay: 0.5s;
+    -webkit-animation-delay: 0.5s;
+}
+
+svg #fish3 {
+    animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+}
+
+svg #fish4 {
+    animation-delay: 0.8s;
+    -webkit-animation-delay: 0.8s;
+}
+
+svg #fish5 {
+    animation-delay: 0.1s;
+    -webkit-animation-delay: 0.1s;
+}
+
+svg #fish6 {
+    animation-delay: 1.3s;
+    -webkit-animation-delay: 1.3s;
+}
+
+/**/
+@-moz-keyframes bounce {
+    0%,
+    50%,
+    100% {
+        -moz-transform: translateY(0);
+        transform: translateY(0);
+    }
+    25% {
+        -moz-transform: translateY(-5px);
+        transform: translateY(-5px);
+    }
+    75% {
+        -moz-transform: translateY(-3px);
+        transform: translateY(-3px);
+    }
+}
+
+@-webkit-keyframes bounce {
+    0%,
+    50%,
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    25% {
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
+    }
+    75% {
+        -webkit-transform: translateY(-3px);
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes bounce {
+    0%,
+    50%,
+    100% {
+
+    }
+    0% {
+        transform: rotate(2deg) translateY(0);
+    }
+    15% {
+        -moz-transform: translateY(-8px);
+        -ms-transform: translateY(-8px);
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-3px) scale(0.95) rotate(5deg);
+    }
+    25% {
+        -moz-transform: translateY(-8px);
+        -ms-transform: translateY(-8px);
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-6px) scale(0.9) rotate(10deg);
+    }
+    55% {
+        -moz-transform: translateY(4px);
+        -ms-transform: translateY(4px);
+        -webkit-transform: translateY(4px);
+        transform: translateY(4px) scale(1.1) rotate(-10deg);
+    }
+    85% {
+        transform: rotate(0deg) scale(1) translateY(0px);
+    }
+}

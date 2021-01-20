@@ -1,6 +1,9 @@
 import flask
 from app import flask_app
-import common, heuristics, lookup, risk
+import common, heuristics, lookup, risk, random, os
+
+
+# TODO: https://stackoverflow.com/questions/31750655/pass-variables-to-all-jinja2-templates-with-flask
 
 
 @flask_app.route('/')
@@ -11,24 +14,27 @@ def search():
 	)
 
 
-@flask_app.route('/api/<endpoint>', methods=['POST'])
+@flask_app.route('/api/<endpoint>', methods=['GET', 'POST'])
 def api_handler(endpoint):
+	result = ''
 	query = flask.request.form.get('query')
 
-	if query:
-		if endpoint == "dns":
-			dns_type = flask.request.form.get('type')
-			if dns_type:
-				result = lookup.dig_dns(query, dns_type)
-			else:
-				return "Missing params", 400
+	if endpoint == "loading":
+		handle = open(os.path.join('static/', 'txt/', 'loading.txt'))
+		result = random.choice(list(handle)).rstrip()
+		handle.close()
+		return result
 
+	elif query:
+		if endpoint == "redirect":
+			result = lookup.get_redirect_url(query)
 		else:
-			result = lookup.api_function_mapping[endpoint](query)
+			return "Not Implemented", 501
 
+	if result:
 		return flask.jsonify(result)
-
-	return "Missing params", 400
+	else:
+		return "Missing params", 400
 
 
 @flask_app.route('/domain/<domain>/risk')

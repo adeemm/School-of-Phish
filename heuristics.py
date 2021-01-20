@@ -1,12 +1,9 @@
-import collections
 import common
 import datetime
 import lookup
 import math
+from models.heuristic import Heuristic
 import re
-
-
-Heuristic = collections.namedtuple('Heuristic', ['title', 'description', 'risk_value'])
 
 
 # Returns a dict with the results of each heuristic test
@@ -35,7 +32,7 @@ def run_tests(url):
     if count_special(url) > 0:
         results.append(Heuristic("Special characters in URL", "Special characters are not very common in legitimate domains", 0.1))
     if count_at_sign(url) > 0:
-        results.append(Heuristic("\"@\" in URL", "In URLs everything to the left of @ gets ignored", 0.1))
+        results.append(Heuristic("\"@\" in URL", "In URLs everything preceding @ often gets ignored", 0.1))
     if count_double_slash(stripped) > 0:
         results.append(Heuristic("Double slash in URL", "\"//\" Could indicate a redirect", 0.01))
     if count_colon(stripped) > 0:
@@ -176,18 +173,3 @@ def check_domain_registration(bare):
 def check_domain_impersonation(url):
     if len(lookup.domain_impersonation(url)) > 0:
         return True
-
-
-
-# TODO: Check for confusables?
-
-# Regex Testing
-# https://accounts.google.co.uk
-# www.google.com
-# accounts.google.com
-# google.co
-# bing.com/test
-# bing.co:69/ok
-# change.com
-# subdomain1.change.com
-# sub-domain1.subdomain2.sub-domain3.change.com
