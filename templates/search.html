@@ -8,11 +8,12 @@
 	<link rel="stylesheet" href="/static/vendors/mdi/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="/static/css/style.css">
 	<link rel="stylesheet" href="/static/css/splash.css">
-	<link rel="icon" type="image/png" href="/static/images/favicon.png"/>
+    <link rel="stylesheet" href="/static/css/loading.css">
+	<link rel="shortcut icon" type="image/png" href="/static/images/favicon.png"/>
 </head>
 
 <body>
-    <div class="loading" id="loading" style="display:none;">loading</div>
+    {% include "loading.html" %}
 
     <div class="container-scroller">
         <div id="tank"></div>
@@ -48,6 +49,8 @@
         </div>
     </div>
 
+    <script src="/static/vendors/bundle/bundle.js"></script>
+    <script src="/static/js/loading.js"></script>
     <script src="/static/js/splash.js"></script>
     <script src="/static/js/validation.js"></script>
 </body>

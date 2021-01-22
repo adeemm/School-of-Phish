@@ -14,27 +14,17 @@ def search():
 	)
 
 
-@flask_app.route('/api/<endpoint>', methods=['GET', 'POST'])
+@flask_app.route('/api/<endpoint>', methods=['POST'])
 def api_handler(endpoint):
-	result = ''
 	query = flask.request.form.get('query')
 
-	if endpoint == "loading":
-		handle = open(os.path.join('static/', 'txt/', 'loading.txt'))
-		result = random.choice(list(handle)).rstrip()
-		handle.close()
-		return result
-
-	elif query:
-		if endpoint == "redirect":
-			result = lookup.get_redirect_url(query)
+	if endpoint == "redirect":
+		if query:
+			return lookup.get_redirect_url(query)
 		else:
-			return "Not Implemented", 501
+			return "Missing params", 400
 
-	if result:
-		return flask.jsonify(result)
-	else:
-		return "Missing params", 400
+	return "Not Implemented", 501
 
 
 @flask_app.route('/domain/<domain>/risk')

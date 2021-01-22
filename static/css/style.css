@@ -434,7 +434,7 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 small,
@@ -15995,7 +15995,7 @@ dl li {
   flex-direction: row;
   padding-left: 0;
   padding-right: 0;
-  padding-top: 44px;
+  padding-top: 64px;
 }
 
 .page-body-wrapper.full-page-wrapper {
@@ -16239,24 +16239,6 @@ dl li {
   background: transparent;
 }
 
-/* style for off-canvas menu*/
-@media screen and (max-width: 991px) {
-  .sidebar-offcanvas {
-    position: fixed;
-    max-height: calc(100vh - 64px);
-    top: 64px;
-    bottom: 0;
-    overflow: auto;
-    right: -240px;
-    -webkit-transition: all 0.25s ease-out;
-    -o-transition: all 0.25s ease-out;
-    transition: all 0.25s ease-out;
-  }
-  .sidebar-offcanvas.active {
-    right: 0;
-  }
-}
-
 /* Navbar */
 .navbar {
   font-weight: 400;
@@ -16334,25 +16316,11 @@ dl li {
   box-shadow: 18px 5px 10px #222334;
 }
 
-@media (max-width: 991px) {
-  .navbar .navbar-menu-wrapper {
-    width: calc(100% - 55px);
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-
 .navbar .navbar-menu-wrapper .navbar-toggler {
   border: 0;
   color: inherit;
   font-size: 1.5rem;
   padding: 0;
-}
-
-@media (max-width: 991px) {
-  .navbar .navbar-menu-wrapper .navbar-toggler:not(.navbar-toggler-right) {
-    display: none;
-  }
 }
 
 @media (max-width: 991px) {
@@ -16829,25 +16797,6 @@ dl li {
   background: #7571f9;
 }
 
-@media (max-width: 991px) {
-  .navbar {
-    flex-direction: row;
-  }
-  .navbar .navbar-brand-wrapper {
-    width: 55px;
-  }
-  .navbar .navbar-brand-wrapper .navbar-brand.brand-logo {
-    display: none;
-  }
-  .navbar .navbar-brand-wrapper .navbar-brand.brand-logo-mini {
-    display: inline-block;
-  }
-  .navbar-collapse {
-    display: flex;
-    margin-top: 0.5rem;
-  }
-}
-
 @media (max-width: 480px) {
   .navbar .navbar-brand-wrapper {
     width: 55px;
@@ -17113,56 +17062,6 @@ dl li {
     margin: auto;
     max-width: 1200px;
   }
-}
-
-/* Loader */
-
-.loading {
-    color: #777;
-    font-family: helvetica, arial, sans-serif;
-    font-size: 13px;
-    font-weight: normal;
-    height: 100px;
-    left: 50%;
-    line-height: 100px;
-    margin: -50px 0 0 -50px;
-    position: absolute;
-    text-align: center;
-    text-shadow: 1px 1px 1px #000;
-    text-transform: uppercase;
-    top: 50%;
-    width: 100px;
-    z-index: 200;
-}
-
-.loading:before {
-    background: #222;
-    border-radius: 10px;
-    content: '';
-    height: 140px;
-    left: 50%;
-    margin: -70px 0 0 -70px;
-    position: absolute;
-    top: 50%;
-    width: 140px;
-    z-index: -2;
-}
-
-.loading:after {
-    animation: rotate 2s infinite linear;
-    border: 1px solid #555;
-    border-radius: 100%;
-    box-shadow: 2px 2px #fff;
-    content: '';
-    height: 100px;
-    left: 50%;
-    margin: -50px 0 0 -50px;
-    position: absolute;
-    text-align: center;
-    text-transform: uppercase;
-    top: 50%;
-    width: 100px;
-    z-index: -1;
 }
 
 @keyframes rotate {

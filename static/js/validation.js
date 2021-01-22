@@ -11,11 +11,6 @@ function encodeBase64(str) {
     return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
 }
 
-// Toggles the loading indicator
-function toggleLoad(shouldShow) {
-    document.getElementsByClassName('loading')[0].style.display = shouldShow ? '' : 'none';
-}
-
 // Fetches the redirected URL
 async function getRedirect(url) {
     var options = {
@@ -24,7 +19,7 @@ async function getRedirect(url) {
         body: 'query=' + url
     };
 
-    var response = await fetch('api/redirect', options);
+    var response = await fetch('/api/redirect', options);
     if (response.ok) {
         return await response.text();
     }
@@ -38,7 +33,7 @@ async function validateSearch() {
 
     var redirected = await getRedirect(url);
     if (redirected)
-        redirected = redirected.replace(/['"\n]+/g, '');
+        redirected = redirected.replace(/[\n]+/g, '');
 
     url = redirected !== "null" ? redirected : url;
 
@@ -54,9 +49,9 @@ async function validateSearch() {
 
 
 // Handle enter button keypress in search bar
-document.getElementById('lookup').addEventListener('keyup', function (event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("searchButton").click();
+$("#lookup").on('keypress',function(e) {
+    if(e.which === 13) {
+        e.preventDefault();
+        $("#searchButton").click();
     }
 });

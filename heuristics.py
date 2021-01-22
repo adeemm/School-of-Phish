@@ -17,7 +17,7 @@ def run_tests(url):
     if count_dots(hostname) > 3:
         results.append(Heuristic("Multiple subdomains", "Phishing domains usually have more subdomains designed to fool users", 0.35))
     if count_hyphens(hostname) > 1:
-        results.append(Heuristic("Hyphens in hostname", "Hyphens can be used to fool users", 0.15))
+        results.append(Heuristic("Hyphens in hostname", "Hyphens can be used to pad URLs and masquerade as legitimate sites", 0.15))
     if entropy(hostname) > 3.7:
         results.append(Heuristic("High entropy hostname", "Phishing domains usually have a higher entropy than legitimate domains", 0.3))
     if count_length(hostname) > 20:
@@ -44,7 +44,7 @@ def run_tests(url):
         results.append(Heuristic("IP Address", "Legitimate websites usually have a domain name, and not just an IP address", 0.5))
 
     if check_domain_registration(bare):
-        results.append(Heuristic("Recently Registered", "This domain was registered less than 1 year ago", 0.45))
+        results.append(Heuristic("Recently Registered", "This domain was registered less than 1 year ago", 0.75))
 
     # Mutually exclusive impersonation checks
     if check_domain_impersonation(url):
