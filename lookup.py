@@ -1,4 +1,4 @@
-from app import cache
+from flask_caching import Cache
 import bs4
 import common, settings
 from itertools import groupby
@@ -6,6 +6,8 @@ import requests
 import re
 import time
 
+
+cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 86400})
 
 
 @cache.memoize()

@@ -1,9 +1,12 @@
 import flask
-from app import flask_app
+from flask import Blueprint
 import common, lookup
 
 
-@flask_app.route('/api/<endpoint>', methods=['POST'])
+api_routes = Blueprint('api_routes', __name__)
+
+
+@api_routes.route('/api/<endpoint>', methods=['POST'])
 def api_handler(endpoint):
 	query = flask.request.form.get('query')
 

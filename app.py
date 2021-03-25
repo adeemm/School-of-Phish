@@ -1,18 +1,17 @@
 from flask import Flask
-from flask_caching import Cache
+import controllers.views
+import controllers.api
 import settings
+import lookup
 
 
 flask_app = Flask(__name__)
+flask_app.register_blueprint(controllers.api.api_routes)
+flask_app.register_blueprint(controllers.views.view_routes)
 
-cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 86400})
-cache.init_app(flask_app)
+lookup.cache.init_app(flask_app)
 
 settings.load_settings("settings.json")
 
 if __name__ == '__main__':
     flask_app.run(use_debugger=True)
-
-
-import controllers.views
-import controllers.api

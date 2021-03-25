@@ -1,18 +1,21 @@
 import flask
-from app import flask_app
+from flask import Blueprint
 from models import query
 import common, heuristics, lookup, risk
 
 
-@flask_app.route('/')
-@flask_app.route('/search')
+view_routes = Blueprint('views', __name__)
+
+
+@view_routes.route('/')
+@view_routes.route('/search')
 def search():
 	return flask.render_template(
 		'search.html'
 	)
 
 
-@flask_app.route('/domain/<domain>/risk')
+@view_routes.route('/domain/<domain>/risk')
 def get_risk(domain):
 	q = query.Query(domain)
 
@@ -30,7 +33,7 @@ def get_risk(domain):
 		)
 
 
-@flask_app.route('/domain/<domain>/blacklists')
+@view_routes.route('/domain/<domain>/blacklists')
 def get_blacklists(domain):
 	q = query.Query(domain)
 
@@ -44,7 +47,7 @@ def get_blacklists(domain):
 		)
 
 
-@flask_app.route('/domain/<domain>/info')
+@view_routes.route('/domain/<domain>/info')
 def get_info(domain):
 	q = query.Query(domain)
 
@@ -71,7 +74,7 @@ def get_info(domain):
 		)
 
 
-@flask_app.route('/domain/<domain>/webpage')
+@view_routes.route('/domain/<domain>/webpage')
 def get_page_info(domain):
 	q = query.Query(domain)
 
@@ -85,7 +88,7 @@ def get_page_info(domain):
 		)
 
 
-@flask_app.route('/domain/<domain>/preview')
+@view_routes.route('/domain/<domain>/preview')
 def get_page_preview(domain):
 	q = query.Query(domain)
 
@@ -100,7 +103,7 @@ def get_page_preview(domain):
 		)
 
 
-@flask_app.route('/domain/<domain>/timeline')
+@view_routes.route('/domain/<domain>/timeline')
 def get_page_timeline(domain):
 	q = query.Query(domain)
 
