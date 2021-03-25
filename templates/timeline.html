@@ -27,26 +27,34 @@
 								</div>
 
 								{% for req in urlscan["data"]["requests"] %}
-									<div class="timeline-wrapper {% if loop.index % 2 == 1 %} timeline-inverted {% endif %} timeline-wrapper-info">
-										<div class="timeline-badge"></div>
-										<div class="timeline-panel">
-											<div class="timeline-heading">
-												<h6 class="timeline-title">Initiator: &nbsp; {{ req["request"]["initiator"]["type"] }} / {{ req["request"]["type"] }}</h6>
-											</div>
-											<div class="timeline-body">
-												<p>
-													{{ req["request"]["request"]["url"] }}
-												</p>
-											</div>
-											<div class="timeline-footer d-flex align-items-center flex-wrap">
-												{% if "failed" in req["response"] %}
-													<span>{{ req["response"]["failed"]["errorText"] }}</span>
-												{% else %}
-													<span>{{ req["request"]["request"]["method"] }} - {{ req["response"]["response"]["status"] }}</span>
-												{% endif %}
-											</div>
-										</div>
-									</div>
+                                    {% if "request" in req %}
+                                        <div class="timeline-wrapper {% if loop.index % 2 == 1 %} timeline-inverted {% endif %} timeline-wrapper-info">
+                                            <div class="timeline-badge"></div>
+                                            <div class="timeline-panel">
+                                                {% if "initiator" in req["request"] %}
+                                                    <div class="timeline-heading">
+                                                        <h6 class="timeline-title">Initiator: &nbsp; {{ req["request"]["initiator"]["type"] }} / {{ req["request"]["type"] }}</h6>
+                                                    </div>
+                                                {% endif %}
+
+                                                {% if "request" in req["request"] and "url" in req["request"] %}
+                                                    <div class="timeline-body">
+                                                        <p>
+                                                            {{ req["request"]["request"]["url"] }}
+                                                        </p>
+                                                    </div>
+                                                {% endif %}
+
+                                                <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                                    {% if "failed" in req["response"] %}
+                                                        <span>{{ req["response"]["failed"]["errorText"] }}</span>
+                                                    {% elif "request" in req["request"] and "response" in req["response"] %}
+                                                        <span>{{ req["request"]["request"]["method"] }} - {{ req["response"]["response"]["status"] }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
 								{% endfor %}
 
 								<div class="timeline-wrapper {% if urlscan["data"]["requests"]|length % 2 == 0 %} timeline-inverted {% endif %} timeline-wrapper-danger">

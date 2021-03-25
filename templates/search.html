@@ -25,6 +25,7 @@
                             <div class="brand-logo text-center">
                                 <div class="mt-4 font-weight-bold"><h3>School of Phish</h3></div>
                             </div>
+
                             <form class="pt-3">
                                 <div class="form-group">
                                     <label for="domainName" id="fish-label">Domain</label>
@@ -34,9 +35,33 @@
                                                 <i class="mdi mdi-link-variant text-primary"></i>
                                             </span>
                                         </div>
+
                                         <input type="text" class="form-control form-control-lg border-left-0" id="lookup" placeholder="domain.TLD">
+
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle" id="dropdownSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-color: #7987a1">
+                                                <i class="mdi mdi-settings "></i>
+                                            </button>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownSettings"
+                                                 x-placement="bottom-start"
+                                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 45px, 0px);">
+                                                <h6 class="dropdown-header">Settings</h6>
+                                                <div class="dropdown-divider"></div>
+                                                <div class="dropdown-item">
+                                                    <div class="mt-2">
+                                                        Follow Redirects
+                                                        <label class="toggle-switch ml-2">
+                                                            <input type="checkbox" id="settingsRedirectCheck" checked="" onclick="toggleSettingsRedirect()">
+                                                            <span class="toggle-slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="my-3">
                                     <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" id="searchButton" onclick="validateSearch()">LOOKUP</a>
                                 </div>

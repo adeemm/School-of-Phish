@@ -33,6 +33,11 @@ def get_path(url):
         return get_url_strip_protocol(url).split("/", 1)[1]
 
 
+# Checks if the input string is a valid domain
+def is_url(input):
+    return bool(re.search("^(https?:\/\/)?(([a-zA-Z0-9-][a-zA-Z0-9-.]{0,61}[a-zA-Z0-9])(?:\.[a-zA-Z]{2,})+)(:?\d{0,5})(\/.*)?$", input))
+
+
 # Checks if the input string is a valid IPv4 address
 def is_ip(input):
     return bool(re.search("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", input))

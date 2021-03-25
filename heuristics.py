@@ -1,3 +1,4 @@
+import bs4
 import common
 import datetime
 import lookup
@@ -13,24 +14,26 @@ def run_tests(url):
     hostname = common.get_hostname(url)
     bare = common.get_bare_hostname(url)
     tld = common.get_tld(url)
+    scan = lookup.urlscan(url)
+    dom = scan["task"]["dom"] if (scan and "task" in scan and "dom" in scan["task"]) else None
 
     if count_dots(hostname) > 3:
-        results.append(Heuristic("Multiple subdomains", "Phishing domains usually have more subdomains designed to fool users", 0.35))
+        results.append(Heuristic("Multiple Subdomains", "Phishing domains usually have more subdomains designed to fool users", 0.3))
     if count_hyphens(hostname) > 1:
-        results.append(Heuristic("Hyphens in hostname", "Hyphens can be used to pad URLs and masquerade as legitimate sites", 0.15))
+        results.append(Heuristic("Hyphens in Hostname", "Hyphens can be used to pad URLs and masquerade as legitimate sites", 0.1))
     if entropy(hostname) > 3.7:
-        results.append(Heuristic("High entropy hostname", "Phishing domains usually have a higher entropy than legitimate domains", 0.3))
+        results.append(Heuristic("High Entropy Hostname", "Phishing domains usually have a higher entropy than legitimate domains", 0.3))
     if count_length(hostname) > 20:
-        results.append(Heuristic("Long hostname", "Phishing domains are usually longer than legitimate domains", 0.3))
+        results.append(Heuristic("Long Hostname", "Phishing domains are usually longer than legitimate domains", 0.2))
     if check_pattern(hostname):
-        results.append(Heuristic("Suspicious TLD pattern in hostname", "Phishing domains use these patterns to try to masquerade as legitimate domains", 0.75))
+        results.append(Heuristic("Suspicious TLD Pattern in Hostname", "Phishing domains use these patterns to try to masquerade as legitimate domains", 0.75))
     if check_keywords(hostname):
-        results.append(Heuristic("Suspicious keywords", "This domain contains suspicious keywords", 0.35))
+        results.append(Heuristic("Suspicious Keywords", "This domain contains suspicious keywords", 0.45))
     if check_tld(tld):
         results.append(Heuristic("Suspicious TLD", "This TLD is less common in legitimate domains and is often used by phishing websites", 0.2))
     
     if count_special(url) > 0:
-        results.append(Heuristic("Special characters in URL", "Special characters are not very common in legitimate domains", 0.1))
+        results.append(Heuristic("Special characters in URL", "Special characters are not very common in legitimate domains", 0.05))
     if count_at_sign(url) > 0:
         results.append(Heuristic("\"@\" in URL", "In URLs everything preceding @ often gets ignored", 0.1))
     if count_double_slash(stripped) > 0:
@@ -38,10 +41,7 @@ def run_tests(url):
     if count_colon(stripped) > 0:
         results.append(Heuristic("Port number in URL", "\":\" Specifies a port number, which isn't common among legitimate domains", 0.4))
     if get_url_len_ratio(stripped) >= 1:
-        results.append(Heuristic("High URL length ratio", "(Ratio of hostname to path), legitimate URLs usually have a ratio of < 1", 0.05))
-
-    if common.is_ip(url):
-        results.append(Heuristic("IP Address", "Legitimate websites usually have a domain name, and not just an IP address", 0.5))
+        results.append(Heuristic("High URL Length Ratio", "(Ratio of hostname to path), legitimate URLs usually have a ratio of < 1", 0.05))
 
     if check_domain_registration(bare):
         results.append(Heuristic("Recently Registered", "This domain was registered less than 1 year ago", 0.75))
@@ -51,6 +51,12 @@ def run_tests(url):
         results.append(Heuristic("Impersonation", "This domain is trying to impersonate a legitimate one", 1))
     elif 0.8 < check_closeness(bare) < 1:
         results.append(Heuristic("Possible Impersonation", "This domain could be trying to impersonate a legitimate one", 0.25))
+
+    # Mutually exclusive dom content check
+    if dom and check_dom_form(dom):
+        results.append(Heuristic("Form Element", "A form element was found in the content of the webpage", 0.55))
+    elif dom and check_dom_password(dom):
+        results.append(Heuristic("Password Input", "A password input was found in the content of the webpage", 0.6))
 
     return results
 
@@ -173,3 +179,19 @@ def check_domain_registration(bare):
 def check_domain_impersonation(url):
     if len(lookup.domain_impersonation(url)) > 0:
         return True
+
+
+# Check if DOM contains a form element
+# Suspicious (True)
+def check_dom_form(dom):
+    parser = bs4.BeautifulSoup(dom, "html.parser")
+    form = parser.find("form")
+    return bool(form)
+
+
+# Check if DOM contains a password input element
+# Suspicious (True)
+def check_dom_password(dom):
+    parser = bs4.BeautifulSoup(dom, "html.parser")
+    password = parser.find("input", {"type": "password"})
+    return bool(password)

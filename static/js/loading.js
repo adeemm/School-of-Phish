@@ -3,7 +3,7 @@ var loadingMessages;
 var getRandom;
 
 
-window.setInterval(updateLoadingText, 3000);
+window.setInterval(updateLoadingText, 5000);
 
 $.getJSON("/static/json/loading.json", function (json) {
     loadingMessages = json;

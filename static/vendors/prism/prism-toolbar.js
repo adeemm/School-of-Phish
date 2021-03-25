@@ -174,5 +174,5 @@
 	/**
 	 * Register the toolbar with Prism.
 	 */
-	Prism.hooks.add('complete', hook);
+	 Prism.hooks.add('complete', hook);
 })();
