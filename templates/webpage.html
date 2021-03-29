@@ -36,27 +36,27 @@
 									<tbody>
 
                                         {% if "wappa" in urlscan["meta"]["processors"] and "data" in urlscan["meta"]["processors"]["wappa"] %}
-										{% for tech in urlscan["meta"]["processors"]["wappa"]["data"] %}
-											<tr>
-												<td class="px-0">
-													<div class="d-flex">
-														<img class="mr-2" src="/static/vendors/wappa/icons/{{ tech["icon"] }}" alt="{{ tech["icon"] }}" />
-														<strong class="mt-2">{{ tech["app"] }}</strong>
-													</div>
-												</td>
+                                            {% for tech in urlscan["meta"]["processors"]["wappa"]["data"] %}
+                                                <tr>
+                                                    <td class="px-0">
+                                                        <div class="d-flex">
+                                                            <img class="mr-2" src="/static/vendors/wappa/icons/{{ tech["icon"] }}" alt="{{ tech["icon"] }}" />
+                                                            <strong class="mt-2">{{ tech["app"] }}</strong>
+                                                        </div>
+                                                    </td>
 
-												<td>
-													{% for cat in tech["categories"] %}
-														{{ cat["name"] }} {% if not loop.last %}, {% endif %} &nbsp;
-													{% endfor %}
-												</td>
+                                                    <td>
+                                                        {% for cat in tech["categories"] %}
+                                                            {{ cat["name"] }} {% if not loop.last %}, {% endif %} &nbsp;
+                                                        {% endfor %}
+                                                    </td>
 
-												<td>{{ tech["confidenceTotal"] }}%</td>
+                                                    <td>{{ tech["confidenceTotal"] }}%</td>
 
-												<td>{{ tech["confidence"][0]["pattern"] }}</td>
-											</tr>
-										{% endfor %}
-
+                                                    <td>{{ tech["confidence"][0]["pattern"] }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
 									</tbody>
 								</table>
 							</div>
