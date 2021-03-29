@@ -35,6 +35,7 @@
 									</thead>
 									<tbody>
 
+                                        {% if "wappa" in urlscan["meta"]["processors"] and "data" in urlscan["meta"]["processors"]["wappa"] %}
 										{% for tech in urlscan["meta"]["processors"]["wappa"]["data"] %}
 											<tr>
 												<td class="px-0">
