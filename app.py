@@ -14,4 +14,4 @@ lookup.cache.init_app(flask_app)
 settings.load_settings("settings.json")
 
 if __name__ == '__main__':
-    flask_app.run(use_debugger=True)
+    flask_app.run()

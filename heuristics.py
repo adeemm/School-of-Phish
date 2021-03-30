@@ -53,10 +53,10 @@ def run_tests(url):
         results.append(Heuristic("Possible Impersonation", "This domain could be trying to impersonate a legitimate one", 0.25))
 
     # Mutually exclusive dom content check
-    if dom and check_dom_form(dom):
-        results.append(Heuristic("Form Element", "A form element was found in the content of the webpage", 0.55))
-    elif dom and check_dom_password(dom):
-        results.append(Heuristic("Password Input", "A password input was found in the content of the webpage", 0.6))
+    if dom and check_dom_password(dom):
+        results.append(Heuristic("Password Input", "A password input was found in the content of the webpage", 0.45))
+    elif dom and check_dom_form(dom):
+        results.append(Heuristic("Form Element", "A form element was found in the content of the webpage", 0.3))
 
     return results
 
