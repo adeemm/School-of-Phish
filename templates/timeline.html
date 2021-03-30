@@ -37,7 +37,7 @@
                                                     </div>
                                                 {% endif %}
 
-                                                {% if "request" in req["request"] and "url" in req["request"] %}
+                                                {% if "request" in req["request"] and "url" in req["request"]["request"] %}
                                                     <div class="timeline-body">
                                                         <p>
                                                             {{ req["request"]["request"]["url"] }}
